@@ -19,6 +19,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
+        video.style.display = 'none';
+        canvas.style.display = 'block';
     });
 
     window.addEventListener('keydown', function(event) {
@@ -26,6 +28,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0);
+            video.style.display = 'none';
+            canvas.style.display = 'block';
         }
     });
 });
