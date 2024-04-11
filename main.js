@@ -4,10 +4,17 @@ const framePerSecond = 15;
 window.addEventListener('DOMContentLoaded', (event) => {
     const video = document.getElementById('webcam');
     const captureButton = document.getElementById('capture');
+    const resetButton = document.getElementById('reset'); // new reset button
+    const imageCounter = document.getElementById('counter'); // new image counter
     const playButton = document.getElementById('play');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     const images = [];
+
+    // Function to update the image counter
+    function updateCounter() {
+        imageCounter.textContent = `Images: ${images.length}`;
+    }
 
     if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -24,6 +31,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
         images.push(canvas.toDataURL());
+        updateCounter(); // update the counter after capturing an image
     });
 
     playButton.addEventListener('click', function() {
@@ -63,5 +71,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }, 1000);
         }
+    });
+
+    // Event listener for the reset button
+    resetButton.addEventListener('click', function() {
+        images.length = 0; // clear the images array
+        updateCounter(); // update the counter after resetting
     });
 });
