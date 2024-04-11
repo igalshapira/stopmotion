@@ -1,17 +1,19 @@
 <!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Webcam Capture</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div id="container">
         <video id="webcam" autoplay></video>
         <canvas id="canvas"></canvas>
     </div>
-    <button id="capture">Capture</button>
-    <button id="play">Play</button>
+    <div id="controls">
+        <button id="capture">Capture</button>
+        <button id="play">Play</button>
+    </div>
 
     <script src="main.js"></script>
 </body>

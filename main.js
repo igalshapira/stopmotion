@@ -1,4 +1,6 @@
 // main.js
+const framePerSecond = 30;
+
 window.addEventListener('DOMContentLoaded', (event) => {
     const video = document.getElementById('webcam');
     const captureButton = document.getElementById('capture');
@@ -9,7 +11,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true })
-            .(function (stream) {
+            .then(function (stream) {
                 video.srcObject = stream;
             })
             .catch(function (error) {
@@ -21,14 +23,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
-        video.style.display = 'none';
-        canvas.style.display = 'block';
         images.push(canvas.toDataURL());
     });
 
     playButton.addEventListener('click', function() {
         let i = 0;
-        setInterval(function() {
+        const interval = setInterval(function() {
             if (i < images.length) {
                 let img = new Image();
                 img.src = images[i];
@@ -37,8 +37,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
                 };
                 i++;
+            } else {
+                clearInterval(interval);
             }
-        }, 1000);
+        }, 1000 / framePerSecond);
     });
 
     window.addEventListener('keydown', function(event) {
@@ -46,8 +48,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0);
-            video.style.display = 'none';
-            canvas.style.display = 'block';
             images.push(canvas.toDataURL());
         } else if (event.key === 'Enter') {
             let i = 0;

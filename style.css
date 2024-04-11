@@ -1,6 +1,7 @@
 /* styles.css */
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -12,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 #webcam, #canvas {
@@ -19,7 +21,18 @@ body {
     max-width: 80vw;
 }
 
-#capture {
+#canvas {
+    position: absolute;
+}
+
+
+#controls {
+    min-height: 100px;
+    display: flex;
+    gap: 10px;
+}
+
+#capture, #play {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
