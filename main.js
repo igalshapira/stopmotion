@@ -1,5 +1,5 @@
 // main.js
-const framePerSecond = 30;
+const framePerSecond = 15;
 
 window.addEventListener('DOMContentLoaded', (event) => {
     const video = document.getElementById('webcam');
