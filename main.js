@@ -1,5 +1,6 @@
 // main.js
-const framePerSecond = 15;
+let framePerSecond = 10;
+let opacity = 80;
 
 window.addEventListener('DOMContentLoaded', (event) => {
     const video = document.getElementById('webcam');
@@ -8,8 +9,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const imageCounter = document.getElementById('counter'); // new image counter
     const playButton = document.getElementById('play');
     const canvas = document.getElementById('canvas');
+    const fpsElement = document.getElementById("fps");
+    const opacityElement = document.getElementById("opacity");
     const context = canvas.getContext('2d');
     const images = [];
+
+    canvas.style.opacity = opacity / 100;
+    opacityElement.value = opacity;
+    fpsElement.value = framePerSecond;
 
     // Function to update the image counter
     function updateCounter() {
@@ -77,5 +84,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     resetButton.addEventListener('click', function() {
         images.length = 0; // clear the images array
         updateCounter(); // update the counter after resetting
+    });
+
+    fpsElement.addEventListener("change", function(event) {
+        const fps = parseInt(event.target.value);
+        framePerSecond = isNaN(fps) ? 10 : fps;
+    });
+
+    opacityElement.addEventListener("change", function(event) {
+        const newOpacity = parseInt(event.target.value);
+        if (!isNaN(newOpacity)) {
+            opacity = newOpacity;
+            canvas.style.opacity = opacity / 100;
+        }
     });
 });
