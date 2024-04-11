@@ -14,13 +14,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const context = canvas.getContext('2d');
     const images = [];
 
-    canvas.style.opacity = opacity / 100;
     opacityElement.value = opacity;
     fpsElement.value = framePerSecond;
 
     // Function to update the image counter
-    function updateCounter() {
-        imageCounter.textContent = `Images: ${images.length}`;
+    function updateCounter(number) {
+        imageCounter.textContent = number ?? images.length;
     }
 
     if (navigator.mediaDevices.getUserMedia) {
@@ -33,50 +32,43 @@ window.addEventListener('DOMContentLoaded', (event) => {
             });
     }
 
-    captureButton.addEventListener('click', function() {
+    function capture() {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
         images.push(canvas.toDataURL());
+        canvas.style.opacity = opacity / 100;
         updateCounter(); // update the counter after capturing an image
-    });
+    }
+    captureButton.addEventListener('click', capture);
 
-    playButton.addEventListener('click', function() {
+    function play() {
+
         let i = 0;
+        canvas.style.opacity = 100;
         const interval = setInterval(function() {
             if (i < images.length) {
+                updateCounter(i);
                 let img = new Image();
                 img.src = images[i];
-                context.clearRect(0, 0, canvas.width, canvas.height);
                 img.onload = function() {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
                 };
                 i++;
             } else {
                 clearInterval(interval);
+                canvas.style.opacity = opacity / 100;
             }
         }, 1000 / framePerSecond);
-    });
+    }
+
+    playButton.addEventListener('click', play);
 
     window.addEventListener('keydown', function(event) {
         if (event.key === ' ') {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
-            images.push(canvas.toDataURL());
+            capture();
         } else if (event.key === 'Enter') {
-            let i = 0;
-            setInterval(function() {
-                if (i < images.length) {
-                    let img = new Image();
-                    img.src = images[i];
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    img.onload = function() {
-                        context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    };
-                    i++;
-                }
-            }, 1000);
+            play();
         }
     });
 
