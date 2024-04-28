@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const fpsElement = document.getElementById("fps");
     const opacityElement = document.getElementById("opacity");
     const context = canvas.getContext('2d');
+    const imageStrip = Dom.byId("imageStrip");
     const images = [];
 
     opacityElement.value = opacity;
@@ -36,9 +37,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
-        images.push(canvas.toDataURL());
+        const dataUrl = canvas.toDataURL();
+        images.push(dataUrl);
         canvas.style.opacity = opacity / 100;
         updateCounter(); // update the counter after capturing an image
+
+        Dom.Img(dataUrl).appendTo(imageStrip);
     }
     captureButton.addEventListener('click', capture);
 
@@ -65,7 +69,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     playButton.addEventListener('click', play);
 
     window.addEventListener('keydown', function(event) {
-        if (event.key === ' ') {
+        if (event.key === ' ' || event.key === 'AudioVolumeUp') {
             capture();
         } else if (event.key === 'Enter') {
             play();
@@ -76,6 +80,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     resetButton.addEventListener('click', function() {
         images.length = 0; // clear the images array
         updateCounter(); // update the counter after resetting
+        imageStrip.empty();
     });
 
     fpsElement.addEventListener("change", function(event) {

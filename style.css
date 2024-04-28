@@ -1,40 +1,87 @@
 /* styles.css */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
 }
 
 #container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-#webcam, #canvas {
-    height: 80vh;
-    max-width: 80vw;
+#webcam,
+#canvas {
+  height: 80vh;
+  max-width: 80vw;
 }
 
 #canvas {
-    position: absolute;
+  position: absolute;
 }
-
 
 #controls {
-    min-height: 100px;
-    display: flex;
-    gap: 10px;
+  min-height: 100px;
+  display: flex;
+  gap: 10px;
 }
 
-#capture, #play, #reset, #counter {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 20px;
+#capture,
+#play,
+#reset,
+#counter {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 20px;
+}
+
+.film {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+  background: #111111;
+  overflow: hidden;
+}
+
+.film img {
+  width: 90px;
+  height: 60%;
+  top: 50%;
+  transform: translate(0%, -50%);
+  margin-left: 4px;
+  box-shadow: inset 0px 0px 10px 0px #b7410e;
+  display: inline-block;
+  margin-top: 50px;
+}
+
+.film::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 0px;
+  width: 100%;
+  height: 8px;
+  background: repeating-linear-gradient(90deg, #5e5e5e, #5e5e5e 8px, black 9px, black 16px);
+}
+
+.film::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 0px;
+  height: 8px;;
+  width: 100%;
+  background: repeating-linear-gradient(90deg, #5e5e5e, #5e5e5e 8px, black 9px, black 16px);
 }
