@@ -6,8 +6,9 @@ let opacity = 80;
 function initStopMotion() {
     const video = document.getElementById('webcam');
     const captureButton = document.getElementById('capture');
-    const resetButton = document.getElementById('reset'); // new reset button
-    const imageCounter = document.getElementById('counter'); // new image counter
+    const resetButton = document.getElementById('reset');
+    const saveButton = document.getElementById('save');
+    const imageCounter = document.getElementById('counter');
     const playButton = document.getElementById('play');
     const canvas = document.getElementById('canvas');
     const fpsElement = document.getElementById("fps");
@@ -15,6 +16,7 @@ function initStopMotion() {
     const context = canvas.getContext('2d');
     const imageStrip = Dom.byId("imageStrip");
     const images = [];
+    let gifEncoder = null;
 
     opacityElement.value = opacity;
     fpsElement.value = framePerSecond;
@@ -44,6 +46,13 @@ function initStopMotion() {
         updateCounter(); // update the counter after capturing an image
 
         Dom.Img(dataUrl).appendTo(imageStrip);
+
+        if (!gifEncoder) {
+            gifEncoder = new GIFEncoder.GIFEncoder(video.videoWidth, video.videoHeight)
+            gifEncoder.setDelay(500)
+            gifEncoder.start()
+        }
+        gifEncoder.addFrame(context);
     }
     captureButton.addEventListener('click', capture);
 
@@ -54,7 +63,7 @@ function initStopMotion() {
         const interval = setInterval(function() {
             if (i < images.length) {
                 updateCounter(i);
-                let img = new Image();
+                const img = new Image();
                 img.src = images[i];
                 img.onload = function() {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -82,6 +91,15 @@ function initStopMotion() {
         images.length = 0; // clear the images array
         updateCounter(); // update the counter after resetting
         imageStrip.empty();
+    });
+
+    saveButton.addEventListener('click', function() {
+        gifEncoder.finish();
+        const buffer = gifEncoder.out.getData();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(new Blob([buffer]));
+        link.download = 'stopmotion.gif';
+        link.click();
     });
 
     fpsElement.addEventListener("change", function(event) {

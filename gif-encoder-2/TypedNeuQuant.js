@@ -20,7 +20,7 @@
  *
  * (JavaScript port 2012 by Johan Nordberg)
  */
-
+define(function(require, exports, module) {
 var ncycles = 100 // number of learning cycles
 var netsize = 256 // number of colors used
 var maxnetpos = netsize - 1
@@ -446,4 +446,5 @@ function NeuQuant(pixels, samplefac) {
   this.lookupRGB = inxsearch
 }
 
-module.exports = NeuQuant
+exports.NeuQuant = NeuQuant
+});

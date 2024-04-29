@@ -20,6 +20,7 @@
   Joe Orost (decvax!vax135!petsd!joe)
 */
 
+define(function(require, exports, module) {
 var EOF = -1
 var BITS = 12
 var HSIZE = 5003 // 80% occupancy
@@ -224,4 +225,5 @@ function LZWEncoder(width, height, pixels, colorDepth) {
   this.encode = encode
 }
 
-module.exports = LZWEncoder
+exports.LZWEncoder = LZWEncoder
+});

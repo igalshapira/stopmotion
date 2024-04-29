@@ -1,8 +1,11 @@
-const stream = require('stream')
-const EventEmitter = require('events')
-const LZWEncoder = require('./LZWEncoder.js')
-const NeuQuant = require('./TypedNeuQuant.js')
-const { OctreeQuant, Color } = require('./OctreeQuant')
+define(function(require, exports, module) {
+
+const { Buffer } = require("dist/buffer");
+// const stream = require('stream')
+// const EventEmitter = require('events')
+const LZWEncoder = require('./LZWEncoder.js').LZWEncoder 
+const NeuQuant = require('./TypedNeuQuant.js').NeuQuant
+// const { OctreeQuant, Color } = require('./OctreeQuant')
 
 class ByteArray {
   constructor() {
@@ -30,9 +33,9 @@ class ByteArray {
   }
 }
 
-class GIFEncoder extends EventEmitter {
+class GIFEncoder /*extends EventEmitter*/ {
   constructor(width, height, algorithm = 'neuquant', useOptimizer = false, totalFrames = 0) {
-    super()
+    // super()
 
     this.width = ~~width
     this.height = ~~height
@@ -397,4 +400,5 @@ class GIFEncoder extends EventEmitter {
   }
 }
 
-module.exports = GIFEncoder
+exports.GIFEncoder = GIFEncoder
+});
