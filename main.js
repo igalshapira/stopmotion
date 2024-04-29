@@ -1,4 +1,5 @@
-// main.js
+requirejs(["gif-encoder-2/GIFEncoder"], function(GIFEncoder) {
+
 let framePerSecond = 10;
 let opacity = 80;
 
@@ -102,3 +103,5 @@ if (document.readyState !== 'loading') {
 } else {
     window.addEventListener('DOMContentLoaded', initStopMotion);
 }
+
+});
