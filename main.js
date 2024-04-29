@@ -2,7 +2,7 @@
 let framePerSecond = 10;
 let opacity = 80;
 
-window.addEventListener('DOMContentLoaded', (event) => {
+function initStopMotion() {
     const video = document.getElementById('webcam');
     const captureButton = document.getElementById('capture');
     const resetButton = document.getElementById('reset'); // new reset button
@@ -95,4 +95,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas.style.opacity = opacity / 100;
         }
     });
-});
+}
+
+if (document.readyState !== 'loading') {
+    initStopMotion();
+} else {
+    window.addEventListener('DOMContentLoaded', initStopMotion);
+}
